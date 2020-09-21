@@ -21,3 +21,11 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*gulpfile.js
+*package-lock.json
+*package.json
+*babel.config.js
+*.eslintrc.js
+*.editorconfig
+*.browserslistrc
+*main.js
