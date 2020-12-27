@@ -45,7 +45,7 @@ export default {
     typeTbs: '',
     visibleList: true,
     centerDialogVisible: false,
-    alertVisible: false,
+    alertVisible: true,
     list: {
       1: {
         type: 'Income',
@@ -101,10 +101,9 @@ export default {
             this.typeTbs = btnClass;
           }
           Object.values(this.list);
-          if (Object.keys(this.list).length <= 1 && btnClass === 'Income') {
-            this.alertVisible = true;
-          } else if (Object.keys(this.list).length <= 1 && btnClass === 'Outcome') {
-            this.alertVisible = true;
+          if (Object.keys(this.list).length === 1
+          && ((btnClass === 'Income') || (btnClass === 'Outcome'))) {
+            this.alertVisible = !this.alertVisible;
           }
           return this.alertVisible;
         });

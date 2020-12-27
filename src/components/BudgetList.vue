@@ -10,8 +10,9 @@
       @deleteItem="deleteItemList"
       :typeTbs="typeTbs"
       :visibleList="visibleList"
+      v-if="alertVisible"
       />
-      <ElAlert type="info" :title="emptyTitle" v-show="alertVisible"/>
+      <ElAlert type="info" :title="emptyTitle" v-else/>
     </ElCard>
     </template>
   </div>
