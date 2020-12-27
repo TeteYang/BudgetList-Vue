@@ -3,8 +3,8 @@
 <template>
   <div>
     <div v-for="(item, index) in list" :key="index"
-    v-show="(typeTbs == item.type) == notView || typeTbs == Object.keys(list).length || !notView">
-      <i class="list-item" :class="item.styled" v-if="isType(item)">
+    v-show="visibleList || typeTbs == 'All' || typeTbs == item.type" >
+      <i class="list-item" :class="[item.styled]">
         <span class="budget-comment">
           {{item.comment}}
         </span>
@@ -12,7 +12,7 @@
           {{item.value}}
         </span>
           <el-button type="danger" size="mini"
-          @click="onDeleteItem(item.id, item.type)">
+          @click="onDeleteItem(item.id)">
             Delete
           </el-button>
       </i>
@@ -23,6 +23,8 @@
 <script>
 export default {
   name: 'BudgetListItem',
+  data: () => ({
+  }),
   props: {
     list: {
       type: Object,
@@ -34,22 +36,14 @@ export default {
     typeTbs: {
       type: String,
     },
+    visibleList: {
+      type: Boolean,
+    },
   },
-  data: () => ({
-  }),
   methods: {
     // eslint-disable-next-line consistent-return
     onDeleteItem(id) {
       this.$emit('deleteItem', id);
-    },
-    // eslint-disable-next-line consistent-return
-    isType(item) {
-      if (item.type === 'Income') {
-        return item;
-      // eslint-disable-next-line no-else-return
-      } else if (item.type === 'Outcome') {
-        return item;
-      }
     },
   },
 };

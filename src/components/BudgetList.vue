@@ -3,14 +3,17 @@
 /* eslint-disable no-alert */
 <template>
   <div class='budget-list-wrap'>
-    <template v-if="isEmpty">
+    <template>
     <ElCard :header="header">
-      <BudgetListItem :list="list" @deleteItem="deleteItemList"
-      :notView="notView" :typeTbs="typeTbs"/>
+      <BudgetListItem
+      :list="list"
+      @deleteItem="deleteItemList"
+      :typeTbs="typeTbs"
+      :visibleList="visibleList"
+      />
+      <ElAlert type="info" :title="emptyTitle" v-show="alertVisible"/>
     </ElCard>
     </template>
-    <ElAlert v-else type="info" :title="emptyTitle"  />
-    {{ text }}
   </div>
 </template>
 
@@ -27,25 +30,20 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    text: {
-      type: String,
-    },
-    notView: {
-      type: Boolean,
-    },
     typeTbs: {
       type: String,
+    },
+    alertVisible: {
+      type: Boolean,
+    },
+    visibleList: {
+      type: Boolean,
     },
   },
   data: () => ({
     header: 'Budget List',
     emptyTitle: 'Empty list',
   }),
-  computed: {
-    isEmpty() {
-      return Boolean(Object.keys(this.list).length);
-    },
-  },
   methods: {
     // eslint-disable-next-line consistent-return
     deleteItemList(id) {

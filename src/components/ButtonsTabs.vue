@@ -10,12 +10,24 @@
 <script>
 export default {
   name: 'ButtonsTabs',
-  props: {
+  data: () => ({
     btns: {
-      type: Object,
-      default: () => ({}),
+      1: {
+        name: 'All',
+        class: 'All',
+      },
+      2: {
+        name: 'Income',
+        class: 'Income',
+        type: 'success',
+      },
+      3: {
+        name: 'Outcome',
+        class: 'Outcome',
+        type: 'warning',
+      },
     },
-  },
+  }),
   methods: {
     activeTab(btnClass, index) {
       this.$emit('clickBtnTab', btnClass, index);

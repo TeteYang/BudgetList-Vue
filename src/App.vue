@@ -4,9 +4,14 @@
       <h1>{{text}}</h1>
     </template>
     <Balance :total="totalBalance" />
-    <ButtonsTabs :btns="btns" @clickBtnTab="clickBtnTab" />
-    <BudgetList :list="list" :text="hello" :typeTbs="typeTbs"
-    :notView="notView" />
+    <ButtonsTabs @clickBtnTab="clickBtnTab" />
+    <BudgetList
+    :list="list"
+    :text="hello"
+    :typeTbs="typeTbs"
+    :alertVisible="alertVisible"
+    :visibleList="visibleList"
+     />
     <Form @submitForm="onSubmit"  />
   <el-dialog
         title="Attention!"
@@ -38,9 +43,9 @@ export default {
   data: () => ({
     text: 'Budget',
     typeTbs: '',
-    notView: false,
-    viewList: true,
+    visibleList: true,
     centerDialogVisible: false,
+    alertVisible: false,
     list: {
       1: {
         type: 'Income',
@@ -48,6 +53,7 @@ export default {
         comment: 'Some income comment',
         id: 1,
         styled: 'color: green el-icon-top',
+        isNotActive: false,
       },
       2: {
         type: 'Outcome',
@@ -55,22 +61,7 @@ export default {
         comment: 'Some outcome comment',
         id: 2,
         styled: 'color: red el-icon-bottom',
-      },
-    },
-    btns: {
-      1: {
-        name: 'All',
-        class: 'all',
-      },
-      2: {
-        name: 'Income',
-        class: 'income',
-        type: 'success',
-      },
-      3: {
-        name: 'Outcome',
-        class: 'outcome',
-        type: 'warning',
+        isNotActive: false,
       },
     },
     hello: 'Hello',
@@ -103,19 +94,19 @@ export default {
       Object.values(this.list)
         // eslint-disable-next-line consistent-return
         .forEach((item) => {
-          if (btnClass === 'all') {
-            this.notView = this.viewList;
-            // eslint-disable-next-line no-return-assign
-            return this.typeTbs = String(Object.keys(this.list).length);
+          if (btnClass === item.type) {
+            this.typeTbs = btnClass;
+            this.visibleList = item.isNotActive;
+          } else if (btnClass === 'All') {
+            this.typeTbs = btnClass;
           }
-          if (btnClass === 'income' && item.type === 'Income') {
-            this.typeTbs = item.type;
-            this.notView = this.viewList;
+          Object.values(this.list);
+          if (Object.keys(this.list).length <= 1 && btnClass === 'Income') {
+            this.alertVisible = true;
+          } else if (Object.keys(this.list).length <= 1 && btnClass === 'Outcome') {
+            this.alertVisible = true;
           }
-          if (btnClass === 'outcome' && item.type === 'Outcome') {
-            this.typeTbs = item.type;
-            this.notView = this.viewList;
-          }
+          return this.alertVisible;
         });
     },
   },
