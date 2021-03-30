@@ -1,4 +1,4 @@
-# hello-world
+# budget-list
 
 ## Project setup
 ```
